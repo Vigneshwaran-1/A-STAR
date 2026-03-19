@@ -1,6 +1,6 @@
 <h1>ExpNo 4 : Implement A* search algorithm for a Graph</h1> 
-<h3>Name:       </h3>
-<h3>Register Number:           </h3>
+<h3>Name:  VIGNESHWRAN.P  </h3>
+<h3>Register Number: 212224040358 </h3>
 <H3>Aim:</H3>
 <p>To ImplementA * Search algorithm for a Graph using Python 3.</p>
 <H3>Algorithm:</H3>
@@ -117,3 +117,65 @@ G 0 <br>
 <h2>Sample Output</h2>
 <hr>
 Path found: ['A', 'E', 'D', 'G']
+
+## PROGRAM
+~~~
+import heapq
+
+def a_star(graph, heuristic, start, goal):
+    open_list = []
+    heapq.heappush(open_list, (0, start))
+
+    g_cost = {start: 0}
+    parent = {start: None}
+
+    while open_list:
+        f_cost, current = heapq.heappop(open_list)
+
+        if current == goal:
+            path = []
+            while current:
+                path.append(current)
+                current = parent[current]
+            return path[::-1]
+
+        for neighbor, cost in graph[current]:
+            new_g = g_cost[current] + cost
+
+            if neighbor not in g_cost or new_g < g_cost[neighbor]:
+                g_cost[neighbor] = new_g
+                f_cost = new_g + heuristic[neighbor]
+                heapq.heappush(open_list, (f_cost, neighbor))
+                parent[neighbor] = current
+
+    return None
+
+graph = {
+    'A': [('B', 1), ('C', 3)],
+    'B': [('D', 3), ('E', 1)],
+    'C': [('F', 5)],
+    'D': [],
+    'E': [('F', 2)],
+    'F': []
+}
+
+heuristic = {
+    'A': 6,
+    'B': 4,
+    'C': 5,
+    'D': 3,
+    'E': 2,
+    'F': 0
+}
+
+path = a_star(graph, heuristic, 'A', 'F')
+
+print("Shortest Path:", path)
+~~~
+
+## OUTPUT
+<img width="356" height="111" alt="image" src="https://github.com/user-attachments/assets/204a7501-f6fe-4f9a-9ff5-5d4230e5a1eb" />
+
+ ## RESULT
+ Thus given experiment  is done successfully.
+
